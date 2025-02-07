@@ -1,6 +1,6 @@
-require("theprimeagen.set")
-require("theprimeagen.remap")
-require("theprimeagen.lazy_init")
+require("cppdemon.set")
+require("cppdemon.remap")
+require("cppdemon.lazy_init")
 
 -- DO.not
 -- DO NOT INCLUDE THIS
@@ -13,7 +13,7 @@ require("theprimeagen.lazy_init")
 -- DO NOT INCLUDE THIS
 -- DO.not
 local augroup = vim.api.nvim_create_augroup
-local ThePrimeagenGroup = augroup('ThePrimeagen', {})
+local cppdemonGroup = augroup('cppdemon', {})
 
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -44,26 +44,25 @@ autocmd('TextYankPost', {
 })
 
 autocmd({"BufWritePre"}, {
-    group = ThePrimeagenGroup,
+    group = cppdemonGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
 autocmd('BufEnter', {
-    group = ThePrimeagenGroup,
+    group = cppdemonGroup,
     callback = function()
+    vim.o.termguicolors = true
             vim.cmd.colorscheme("tokyonight")
-vim.cmd [[highlight CursorLineNr guifg=#FFA500]]
-
--- Set the rest of the line numbers (LineNr) color to white
-vim.cmd [[highlight LineNr guifg=#FFFFFF]]
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FEA82F", bold = true })
+         vim.cmd [[highlight LineNr guifg=#FFFFFF]]
 
     end
 })
 
 
 autocmd('LspAttach', {
-    group = ThePrimeagenGroup,
+    group = cppdemonGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)

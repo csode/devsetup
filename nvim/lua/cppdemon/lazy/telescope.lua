@@ -65,8 +65,13 @@ return {
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>ff', function()
             builtin.find_files({
-                find_command = { 'find', '.', '-not', '-path', './.git/*' },
-            })
+    find_command = { 'find', '.', '-type', 'f',
+        '-not', '-path', './.git/*',
+        '-not', '-path', './build/*',
+        '-not', '-path', './cargo/*'
+    },
+})
+
         end)
 
         vim.keymap.set('n', '<C-p>', builtin.git_files)

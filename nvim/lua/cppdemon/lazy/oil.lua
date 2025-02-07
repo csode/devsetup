@@ -11,6 +11,9 @@ return {
       end
 
       require("oil").setup {
+        skip_confirm_for_simple_edits = true,
+        prompt_save_on_select_new_entry = false,
+        confirm = false,
         columns = { "icon" },
         keymaps = {
           ["<C-h>"] = false,
@@ -18,6 +21,7 @@ return {
           ["<C-k>"] = false,
           ["<C-j>"] = false,
           ["<M-h>"] = "actions.select_split",
+        ["<C-s>"] = false,
         },
         win_options = {
           winbar = "%{v:lua.CustomOilBar()}",
@@ -35,7 +39,7 @@ return {
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
       -- Open parent directory in floating window
-      vim.keymap.set("n", "<space>-", require("oil").toggle_float)
+      vim.keymap.set("n", "<space>'", require("oil").toggle_float)
     end,
   },
 }
