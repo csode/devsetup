@@ -11,10 +11,6 @@ if [ $num == 1 ]; then
     if ! pacman -Q fzf &>/dev/null; then
         sudo pacman -S --noconfirm fzf
     fi
-    if ! pacman -Q lazygit &>/dev/null; then
-        sudo pacman -S --noconfirm lazygit
-    fi
-
     if ! pacman -Q xorg-xrandr &>/dev/null; then
         sudo pacman -S --noconfirm xorg-xrandr
     fi

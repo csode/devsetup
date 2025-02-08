@@ -1,7 +1,7 @@
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>q", ":wq<CR>")
+vim.keymap.set("n", "<leader>w", ":wq<CR>")
 -- Visual mode: Yank to both clipboard and default register
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 -- Remap `yy` to yank to both clipboard and default register
@@ -72,8 +72,13 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 -- Auto-save when pressing End key
 vim.api.nvim_set_keymap('n', '<Esc>', ':write<CR>', { noremap = true, silent = true })
 -- Keybinding to toggle Markdown preview
-vim.api.nvim_set_keymap('n', '<Leader>mp', ':MarkdownPreview<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>mp', ':vsp | terminal glow %<CR>i', { noremap = true, silent = true })
 
 
+vim.keymap.set('n', '<leader>c', ':lua local lang = vim.fn.input("Enter language for cheatsheet: ") lang = lang ~= "" and lang or "python" vim.cmd("silent !tmux new-window -n \'cheatsheet\' \'curl cheat.sh/" .. lang .. " && zsh\'")<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', "'", '$', { noremap = true, silent = true })
+-- Map single quote (') to go to the beginning of the current line
+vim.api.nvim_set_keymap('n', ";", '0w', { noremap = true, silent = true })
 
 
