@@ -41,5 +41,8 @@ I've included a `main.sh` script that simplifies the installation of what I cons
 - `ttf-font-awesome` (font)
 - `ttf-fira-code` (font)
 
+## Pictures :
 
+![screenshot-1](screenshot-1.png)
+![screenshot-2](screenshot-2.png)
 
