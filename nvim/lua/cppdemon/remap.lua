@@ -79,6 +79,6 @@ vim.keymap.set('n', '<leader>c', ':lua local lang = vim.fn.input("Enter language
 
 vim.api.nvim_set_keymap('n', "'", '$', { noremap = true, silent = true })
 -- Map single quote (') to go to the beginning of the current line
-vim.api.nvim_set_keymap('n', ".", '0w', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ";", '0w', { noremap = true, silent = true })
 
 

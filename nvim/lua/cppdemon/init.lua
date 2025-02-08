@@ -52,10 +52,13 @@ autocmd({"BufWritePre"}, {
 autocmd('BufEnter', {
     group = cppdemonGroup,
     callback = function()
+    vim.o.cursorline = true
     vim.o.termguicolors = true
-            vim.cmd.colorscheme("tokyonight")
-        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FEA82F", bold = true })
-         vim.cmd [[highlight LineNr guifg=#FFFFFF]]
+        vim.cmd.colorscheme("rose-pine")
+        vim.cmd [[highlight CursorLineNr guifg=#FFFFFF guibg=NONE]]
+        vim.cmd [[highlight CursorLine guibg=NONE ctermbg=NONE]]
+        vim.o.cursorline = true
+
 
     end
 })
