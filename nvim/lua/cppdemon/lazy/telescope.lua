@@ -9,7 +9,8 @@ return {
         -- Load Telescope and the live grep args extension
         require('telescope').setup({
             defaults = {
-                winblend = 30,
+                prompt_position = "top",
+                winblend = 10,
                 winhighlight = "Normal:Normal,FloatBorder:Normal,Search:Search",
                 file_ignore_patterns = {
                     "vendor", "vendor/", "node_modules", "/venv",
