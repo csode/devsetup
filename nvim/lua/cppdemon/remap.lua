@@ -1,12 +1,13 @@
-
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>w", ":wq<CR>")
+vim.api.nvim_set_keymap('n', '<Leader><leader>r', ':luafile ~/.config/nvim/init.lua<CR>', { noremap = true, silent = true })
+
 -- Visual mode: Yank to both clipboard and default register
 vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true })
 -- Remap `yy` to yank to both clipboard and default register
 vim.api.nvim_set_keymap('n', 'yy', '"+yy', { noremap = true, silent = true })
-
+vim.keymap.set("n", "|","<cmd>Speedtyper<CR>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -37,7 +38,7 @@ vim.keymap.set({"n", "v"}, "<leader>d", "\"_d")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
-vim.api.nvim_set_keymap("n", "<leader>tt", ":!bash -c '~/scripts/tmux-sessionize.sh' <CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>t", ":term bash ~/scripts/tmux-sessionize.sh<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "Ff", vim.lsp.buf.format)
 
@@ -73,12 +74,24 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 vim.api.nvim_set_keymap('n', '<Esc>', ':write<CR>', { noremap = true, silent = true })
 -- Keybinding to toggle Markdown preview
 vim.api.nvim_set_keymap('n', '<Leader>mp', ':vsp | terminal glow %<CR>i', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>tp', ':silent !tmux new-window "zsh -c \\"glow %; exec zsh\\"" <CR>', { noremap = true, silent = true })
+
 
 
 vim.keymap.set('n', '<leader>c', ':lua local lang = vim.fn.input("Enter language for cheatsheet: ") lang = lang ~= "" and lang or "python" vim.cmd("silent !tmux new-window -n \'cheatsheet\' \'curl cheat.sh/" .. lang .. " && zsh\'")<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', "'", '$', { noremap = true, silent = true })
--- Map single quote (') to go to the beginning of the current line
 vim.api.nvim_set_keymap('n', ";", '0w', { noremap = true, silent = true })
+vim.keymap.set('n',"<Leader>q", "<cmd>q!<CR>", {noremap = true ,silent = true})
 
+-- Function to increment the first number on the current line
+function increment_number_in_line()
+  local line = vim.api.nvim_get_current_line()  -- Get the current line
+  local updated_line = line:gsub('%d+', function(num)
+    local n = tonumber(num)  -- Convert the number to a Lua number
+    return tostring(n + 1)   -- Increment the number
+  end, 1)  -- Only replace the first number
+  vim.api.nvim_set_current_line(updated_line)  -- Set the updated line back
+end
+vim.api.nvim_set_keymap('n', '<leader>;', ':lua increment_number_in_line()<CR>', { noremap = true, silent = true })
 

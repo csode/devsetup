@@ -59,7 +59,12 @@ echo "Do you want my cofig files"
 read -p "Enter 1 to contiue" option
 
 if [ "$option" == "1" ]; then
-    cp -r * ~/.config/
+    cp -r i3 ~/.config/
+    cp -r neofetch ~/.config/
+    cp -r nvim ~/.config/
+    cp -r polybar ~/.config/
+    cp -r rofi ~/.config/
+    cp -r wallpaer ~/Pictures/
     cp -r .tmux.conf ~/
     echo "Copying Complete"
 else
@@ -82,3 +87,5 @@ else
     echo "Cloning scripts repository..."
     git clone https://github.com/fedoralife/scripts.git "$HOME/scripts"
 fi
+
+

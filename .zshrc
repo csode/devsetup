@@ -26,20 +26,11 @@ alias tt='~/scripts/tmux_sessionizer.sh'
 alias cpp='~/scripts/cpp.sh'
 alias g='cd $(git ls-tree --name-only HEAD | fzf)'
 alias youtube-dl='python3 /usr/local/bin/youtube-dl'
-alias cc='gcc'
+alias cg='~/scripts/c.sh'
 
 export TERM=xterm-256color
 export PATH="$HOME/.local/bin:$PATH"
 tmux_rename_window() {
   tmux rename-window "$1"
 }
-SESSION_NAME="main"
-
-tmux has-session -t $SESSION_NAME 2>/dev/null
-
-if [ $? != 0 ]; then
-    tmux new-session -d -s $SESSION_NAME
-fi
-
-tmux attach -t $SESSION_NAME
-
+alias gpwd='cat ~/Documents/token.md | xclip -selection clipboard  '

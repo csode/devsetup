@@ -101,17 +101,60 @@ return {
             root_dir = lspconfig.util.root_pattern(".git", "compile_commands.json"),
             dynamicRegistration = true,
         })
+local nvim_lsp = require('lspconfig')
 
-        -- LSP setup for ts_ls (TypeScript/JavaScript)
-        lspconfig.ts_ls.setup({
-            capabilities = capabilities,
-            root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-            on_attach = function(client, bufnr)
-                local opts = { noremap = true, silent = true, buffer = bufnr }
-                vim.keymap.set("n", "<leader>rf", "<cmd>TypescriptRenameFile<CR>", opts)
-                vim.keymap.set("n", "<leader>oi", "<cmd>TypescriptOrganizeImports<CR>", opts)
-            end,
-        })
+-- Capabilities, e.g., for autocompletion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Setup for TypeScript/React (typescript-language-server)
+nvim_lsp.ts_ls.setup({
+    capabilities = capabilities,
+    root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+    on_attach = function(client, bufnr)
+        local opts = { noremap = true, silent = true, buffer = bufnr }
+
+        -- Key mappings for TypeScript features
+        vim.keymap.set("n", "<leader>rf", "<cmd>TypescriptRenameFile<CR>", opts)
+        vim.keymap.set("n", "<leader>oi", "<cmd>TypescriptOrganizeImports<CR>", opts)
+        vim.keymap.set("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)  -- Optional: formatting keybinding
+
+        -- Handle React/JSX/TSX specific settings
+        if client.config.flags then
+            client.config.flags.allowJs = true  -- Allows JavaScript files for TypeScript language server
+        end
+    end,
+})
+
+-- React JSX/TSX support using the `typescript-language-server`
+nvim_lsp.ts_ls.setup({
+    capabilities = capabilities,
+    root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+    on_attach = function(client, bufnr)
+        local opts = { noremap = true, silent = true, buffer = bufnr }
+
+        -- Key mappings for TypeScript and React features
+        vim.keymap.set("n", "<leader>rf", "<cmd>TypescriptRenameFile<CR>", opts)
+        vim.keymap.set("n", "<leader>oi", "<cmd>TypescriptOrganizeImports<CR>", opts)
+        vim.keymap.set("n", "<leader>fmt", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)  -- Optional: formatting keybinding
+
+        -- React JSX/TSX support
+        vim.cmd([[ autocmd FileType typescriptreact setlocal ts=2 sw=2 ]]) -- Set tab size to 2 spaces for React files
+
+        -- Enable auto-import for React
+        if client.server_capabilities.document_formatting then
+            vim.keymap.set("n", "<leader>ai", "<cmd>lua vim.lsp.buf.code_action({ apply = true, kind = 'quickfix' })<CR>", opts)
+        end
+    end,
+})
+
+-- Ensure correct settings for React JSX/TSX filetypes
+vim.cmd([[
+  augroup TypescriptReactSetup
+    autocmd!
+    autocmd FileType typescriptreact setlocal ts=2 sw=2
+  augroup END
+]])
+
 
 lspconfig.rust_analyzer.setup({
   capabilities = capabilities,
@@ -127,7 +170,7 @@ lspconfig.rust_analyzer.setup({
 
         -- Treesitter setup
         require("nvim-treesitter.configs").setup({
-            ensure_installed = {"typescript", "javascript", "html", "rust", "cpp", "c", "json", "lua"},
+            ensure_installed = {"ocaml","typescript", "javascript", "html", "rust", "cpp", "c", "json", "lua"},
             highlight = { enable = true },
             textobjects = { enable = true },
         })
@@ -164,7 +207,6 @@ lspconfig.rust_analyzer.setup({
                 { name = "path" },
             }),
         })
-
         -- Formatting and Linting with null-ls
         require("null-ls").setup({
             sources = {
@@ -209,6 +251,11 @@ lspconfig.rust_analyzer.setup({
 
         -- Symbols Outline
         require("symbols-outline").setup()
+--
+--vim.cmd [[
+--highlight! link FloatBorder Normal
+-- highlight! link NormalFloat Normal
+ --]]
     end,
 }
 
